@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Lego Building - My Hobbies</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body.lego {
+            background: #1a2e1f;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .top-banner {
+            width: 100%;
+        }
+
+        .hero-img-wrapper {
+            position: relative;
+            width: 100%;
+            height: 260px;
+            overflow: hidden;
+            background: #5f7a4b;
+            background-image: repeating-linear-gradient(45deg, #5e7d4a 0px, #5e7d4a 8px, #3f5c2f 8px, #3f5c2f 16px);
+        }
+
+        .hero-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            opacity: 0.3;
+            mix-blend-mode: overlay;
+        }
+
+        .hero-img-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(145deg, #3b2e1e 0%, #1f3b2c 100%);
+            opacity: 0.6;
+            mix-blend-mode: multiply;
+            z-index: 1;
+        }
+
+        .top-inner {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-shadow: 4px 4px 0 #2d2d2d;
+            padding: 1rem;
+            z-index: 2;
+        }
+
+        .brand h1 {
+            font-size: 3.2em;
+            font-weight: 900;
+            letter-spacing: 2px;
+            margin-bottom: 0.2em;
+            background: #4c6b4c;
+            padding: 0.2rem 2rem;
+            display: inline-block;
+            border: 5px solid #f0d058;
+            box-shadow: inset 0 0 0 3px #1e3b1e, 0 8px 0 #2b4f2b;
+        }
+
+        .subtitle {
+            font-size: 1.3rem;
+            background: #4c6b4c;
+            padding: 0.3rem 2rem;
+            border: 3px solid #f0d058;
+            margin-top: 0.5rem;
+            font-weight: 600;
+            box-shadow: 0 4px 0 #2b4f2b;
+        }
+
+        .site-nav {
+            margin-top: 0.5em;
+        }
+
+        .nav-list {
+            display: flex;
+            list-style: none;
+            gap: 1.2rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            background: rgba(30, 30, 30, 0.8);
+            padding: 0.7rem 2rem;
+            border-radius: 50px;
+            border: 3px solid #f0d058;
+            box-shadow: 0 5px 0 #5a3e1a;
+        }
+
+        .nav-list a {
+            color: #f0f0f0;
+            text-decoration: none;
+            font-weight: 700;
+            padding: 0.3rem 1rem;
+            border-radius: 40px;
+            transition: 0.1s;
+            background: #4c4c4c;
+            border: 3px solid #b0b0b0;
+        }
+
+        .nav-list a.active {
+            background: #44a844;
+            border-color: #f0d058;
+            box-shadow: 0 0 0 2px #1e3b1e;
+        }
+
+        .nav-list a:hover {
+            background: #6f6f6f;
+            border-color: #ffffa0;
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 2rem 1rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .lego-boxes {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .info-box {
+            background: #9e9e9e;
+            background-image: repeating-linear-gradient(45deg, #8b8b8b 0px, #8b8b8b 2px, #a7a7a7 2px, #a7a7a7 6px);
+            border: 6px solid #3b3b3b;
+            box-shadow: inset 0 0 0 3px #1e1e1e, 0 8px 0 #2b2b2b;
+            border-radius: 24px;
+            padding: 1.5rem;
+            color: #f0ead0;
+            text-shadow: 2px 2px 0 #1f2f1f;
+        }
+
+        .info-box h2 {
+            font-size: 1.9rem;
+            color: #fff9e8;
+            text-shadow: 3px 3px 0 #3a3a3a;
+            background: #5c7c5c;
+            display: inline-block;
+            padding: 0.2rem 1.5rem;
+            border: 3px solid #f0d058;
+            margin-bottom: 1rem;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 0 #2b4f2b;
+        }
+
+        .info-box p, .info-box li {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            background: rgba(30,30,30,0.2);
+            padding: 0.5rem;
+            border-radius: 12px;
+            list-style-position: inside;
+        }
+
+        .info-box ul {
+            list-style-type: none;
+        }
+
+        .info-box li {
+            margin-bottom: 0.5rem;
+            background: rgba(40,40,40,0.3);
+            border-left: 4px solid #f0d058;
+        }
+
+        .styled-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #4a5f4a;
+            border: 4px solid #f0d058;
+            color: #f5f0d7;
+            font-weight: 400;
+            margin: 1rem 0;
+        }
+        .styled-table th, .styled-table td {
+            border: 2px solid #f0d058;
+            padding: 0.6rem;
+            text-align: left;
+        }
+        .styled-table thead {
+            background: #1e3b1e;
+            color: #f9f2b5;
+        }
+        .odd-row { background: #526852; }
+        .even-row { background: #405940; }
+        tfoot td {
+            background: #2e4a2e;
+            font-weight: 600;
+        }
+
+        .gallery-section {
+            margin-top: 2rem;
+        }
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem 1.5rem;
+            justify-content: center;
+        }
+        .gallery-item {
+            background: #7f6b4b;
+            border: 6px solid #4f3f28;
+            border-radius: 30px;
+            box-shadow: inset 0 0 0 4px #917b5b, 0 8px 0 #3a2e1c;
+            padding: 1.2rem 1rem 1.5rem 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        .gallery-item h3 {
+            background: #5c7c5c;
+            display: inline-block;
+            padding: 0.3rem 1.2rem;
+            border: 3px solid #f0d058;
+            color: white;
+            text-shadow: 2px 2px 0 #1f331f;
+            margin-top: -0.8rem;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            border-radius: 30px;
+            box-shadow: 0 4px 0 #2b4f2b;
+        }
+        .gallery-item img {
+            width: 100%;
+            max-width: 320px;
+            height: auto;
+            border: 5px solid #1e1e1e;
+            border-radius: 20px;
+            box-shadow: 0 6px 0 #2f2f2f;
+            background: #d6c8a8;
+            object-fit: cover;
+            aspect-ratio: 4/3;
+        }
+        .caption {
+            margin-top: 1rem;
+            background: #312718;
+            border: 4px solid #f0d058;
+            color: #f3e3c2;
+            font-size: 1rem;
+            padding: 0.6rem 0.8rem;
+            border-radius: 20px;
+            width: 100%;
+            box-shadow: inset 0 0 0 2px #4d3a1f;
+        }
+
+        @media (max-width: 650px) {
+            .brand h1 { font-size: 2.4rem; }
+            .subtitle { font-size: 1.1rem; }
+        }
+    </style>
+</head>
+<body class="lego">
+    <header class="top-banner">
+        <div class="hero-img-wrapper">
+            <img src="homehero.jpg" alt="Hero background" class="hero-img" />
+            <div class="hero-img-overlay"></div>
+            <div class="top-inner">
+                <div class="brand">
+                    <h1>🧱 Lego Building 🧱</h1>
+                    <p class="subtitle">Creating brick by brick</p>
+                </div>
+                <nav class="site-nav" aria-label="Main navigation" style="margin-top:0.5em;">
+                    <ul class="nav-list">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="hobby1.html">Gaming</a></li>
+                        <li><a href="hobby2.html" class="active">Lego</a></li>
+                        <li><a href="hobby3.html">Piano</a></li>
+                        <li><a href="contacts.html">Contacts</a></li>
+                        <li><a href="game.html">Game</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+    <main class="main-content">
+        <section class="article lego-boxes">
+            <div class="info-box why-lego-box">
+                <h2>Why I Love Lego</h2>
+                <p>Lego is more than just a toy—it's a creative outlet that helps me relax and express myself. Building sets is satisfying, and seeing a model come to life piece by piece is rewarding. The process teaches patience, focus, and problem-solving.</p>
+            </div>
+            <div class="info-box skills-box">
+                <h2>Skills Developed</h2>
+                <ul>
+                    <li>Creativity and imagination</li>
+                    <li>Patience and perseverance</li>
+                    <li>Spatial awareness and planning</li>
+                    <li>Fine motor skills</li>
+                    <li>Teamwork (when building with friends/family)</li>
+                </ul>
+            </div>
+            <div class="info-box sets-table-box">
+                <h2>Favorite Lego Sets</h2>
+                <table class="styled-table" aria-label="Favorite Lego Sets">
+                    <thead>
+                        <tr>
+                            <th scope="col">Set Name</th>
+                            <th scope="col">Theme</th>
+                            <th scope="col">Year</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="odd-row">
+                            <td>Technic 42206 Oracle Red Bull Racing RB20 F1 Car</td>
+                            <td>Technic</td>
+                            <td>2024</td>
+                        </tr>
+                        <tr class="even-row">
+                            <td>Ideas 21309 NASA Apollo 11 Saturn V</td>
+                            <td>Ideas</td>
+                            <td>2017</td>
+                        </tr>
+                        <tr class="odd-row">
+                            <td>City 60047 Police Station</td>
+                            <td>City</td>
+                            <td>2014</td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="3">Wishlist: Titanic, Colosseum, Eiffel Tower</td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+            <div class="info-box wishlist-box">
+                <h2>Wishlist</h2>
+                <ul>
+                    <li>Titanic</li>
+                    <li>Colosseum</li>
+                    <li>Eiffel Tower</li>
+                </ul>
+                <p>These sets are massive and would be a great challenge for a long build!</p>
+            </div>
+        </section>
+        <section class="gallery-section">
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <h3>Speed Champions</h3>
+                    <img src="sma.jpg" alt="LEGO Speed Champions set, race cars, colorful bricks" tabindex="0" aria-describedby="lego-sma-caption">
+                    <div class="caption" id="lego-sma-caption">LEGO Speed Champions set. Features race cars built from colorful bricks, perfect for car enthusiasts.</div>
+                </div>
+                <div class="gallery-item">
+                    <h3>F1 Technic (Red Bull & Ferrari)</h3>
+                    <img src="tec.jpg" alt="LEGO Technic F1 Red Bull and Ferrari, detailed models" tabindex="0" aria-describedby="lego-tec-caption">
+                    <div class="caption" id="lego-tec-caption">LEGO Technic F1 builds — Red Bull and Ferrari. Detailed models with moving parts and realistic design.</div>
+                </div>
+                <div class="gallery-item">
+                    <h3>Police Station</h3>
+                    <img src="pol.jpg" alt="LEGO City 60047 Police Station, blue and white building" tabindex="0" aria-describedby="lego-pol-caption">
+                    <div class="caption" id="lego-pol-caption">LEGO City 60047 Police Station. A blue and white building with lots of details and minifigures.</div>
+                </div>
+                <div class="gallery-item">
+                    <h3>Saturn V</h3>
+                    <img src="roc.jpg" alt="LEGO Ideas 21309 NASA Apollo 11 Saturn V, tall rocket model" tabindex="0" aria-describedby="lego-roc-caption">
+                    <div class="caption" id="lego-roc-caption">LEGO Ideas 21309 NASA Apollo 11 Saturn V. A tall rocket model, great for display and learning about space history.</div>
+                </div>
+            </div>
+        </section>
+    </main>
+</body>
+</html>

@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>My Hobbies - Minecraft Edition</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body.home {
+            background: #1a2e1f;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .top-banner {
+            width: 100%;
+        }
+
+        .hero-img-wrapper {
+            position: relative;
+            width: 100%;
+            height: 320px;
+            overflow: hidden;
+            background: #5f7a4b;
+            background-image: repeating-linear-gradient(45deg, #5e7d4a 0px, #5e7d4a 8px, #3f5c2f 8px, #3f5c2f 16px);
+        }
+
+        .hero-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            opacity: 0.4;
+            mix-blend-mode: overlay;
+        }
+
+        .hero-img-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(145deg, #3b2e1e 0%, #1f3b2c 100%);
+            opacity: 0.6;
+            mix-blend-mode: multiply;
+            z-index: 1;
+        }
+
+        .top-inner {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-shadow: 4px 4px 0 #2d2d2d, 2px 2px 0 #000;
+            padding: 1rem;
+            z-index: 2;
+        }
+
+        .brand h1 {
+            font-size: 3.2em;
+            font-weight: 900;
+            letter-spacing: 2px;
+            margin-bottom: 0.2em;
+            background: #4c6b4c;
+            padding: 0.2rem 2rem;
+            display: inline-block;
+            border: 5px solid #f0d058;
+            box-shadow: inset 0 0 0 3px #1e3b1e, 0 8px 0 #2b4f2b;
+            text-transform: uppercase;
+        }
+
+        .hero-message h2 {
+            font-size: 2em;
+            font-weight: 700;
+            color: #fff;
+            background: #4c6b4c;
+            padding: 0.3rem 2rem;
+            border: 3px solid #f0d058;
+            margin-bottom: 0.5rem;
+            box-shadow: 0 4px 0 #2b4f2b;
+        }
+
+        .site-nav {
+            margin-top: 0.5em;
+        }
+
+        .nav-list {
+            display: flex;
+            list-style: none;
+            gap: 1.2rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            background: rgba(30, 30, 30, 0.8);
+            padding: 0.7rem 2rem;
+            border-radius: 50px;
+            border: 3px solid #f0d058;
+            box-shadow: 0 5px 0 #5a3e1a;
+        }
+
+        .nav-list a {
+            color: #f0f0f0;
+            text-decoration: none;
+            font-weight: 700;
+            padding: 0.3rem 1rem;
+            border-radius: 40px;
+            transition: 0.1s;
+            background: #4c4c4c;
+            border: 3px solid #b0b0b0;
+            text-shadow: 1px 1px 0 #000;
+        }
+
+        .nav-list a.active {
+            background: #44a844;
+            border-color: #f0d058;
+            box-shadow: 0 0 0 2px #1e3b1e;
+        }
+
+        .nav-list a:hover {
+            background: #6f6f6f;
+            border-color: #ffffa0;
+            transform: translateY(-2px);
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 2rem 1rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .big-card-bg {
+            background: #9e9e9e;
+            background-image: repeating-linear-gradient(45deg, #8b8b8b 0px, #8b8b8b 2px, #a7a7a7 2px, #a7a7a7 6px);
+            border: 8px solid #3b3b3b;
+            box-shadow: inset 0 0 0 4px #1e1e1e, 0 12px 0 #2b2b2b;
+            border-radius: 40px;
+            padding: 2rem;
+        }
+
+        .big-card-wrapper {
+            background: #7f6b4b;
+            border: 6px solid #4f3f28;
+            border-radius: 30px;
+            box-shadow: inset 0 0 0 4px #917b5b, 0 8px 0 #3a2e1c;
+            padding: 2rem;
+        }
+
+        .about-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .about-card {
+            background: #5c7c5c;
+            border: 5px solid #1e1e1e;
+            border-radius: 25px;
+            box-shadow: 0 0 0 3px #6b6b6b, 0 8px 0 #2f2f2f;
+            padding: 1.5rem;
+            color: #f5f0d7;
+            text-shadow: 2px 2px 0 #1f2f1f;
+            transition: 0.1s;
+            background-image: radial-gradient(circle at 20% 30%, #fcf0c0 2px, transparent 2px);
+        }
+
+        .about-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 0 0 3px #f0d058, 0 12px 0 #2f2f2f;
+        }
+
+        .about-card h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            background: #1e3b1e;
+            display: inline-block;
+            padding: 0.2rem 1.2rem;
+            border: 3px solid #f0d058;
+            border-radius: 30px;
+            color: #fff9e8;
+        }
+
+        .about-card p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .about-color1 { background: #5c7c5c; }
+        .about-color2 { background: #6b8c6b; }
+        .about-color3 { background: #4e7a4e; }
+        .about-color4 { background: #3e6b3e; }
+
+        .misc-section {
+            margin-bottom: 2.5rem;
+            text-align: center;
+        }
+
+        .misc-section h2 {
+            font-size: 2.2rem;
+            color: #fff9e8;
+            text-shadow: 4px 4px 0 #3a3a3a;
+            background: #5c7c5c;
+            display: inline-block;
+            padding: 0.3rem 2.5rem;
+            border: 4px solid #f0d058;
+            margin-bottom: 1.5rem;
+            letter-spacing: 2px;
+            box-shadow: 0 6px 0 #2b4f2b;
+        }
+
+        .misc-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 2rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .misc-card {
+            background: #4a5f4a;
+            border: 5px solid #1e1e1e;
+            border-radius: 25px;
+            box-shadow: 0 0 0 3px #6b6b6b, 0 8px 0 #2f2f2f;
+            padding: 1.8rem 1.5rem;
+            color: #f5f0d7;
+            background-image: repeating-linear-gradient(45deg, #526852 0px, #526852 3px, #405940 3px, #405940 6px);
+        }
+
+        .misc-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            background: #1e3b1e;
+            display: inline-block;
+            padding: 0.2rem 1.2rem;
+            border: 3px solid #f0d058;
+            border-radius: 30px;
+            color: #fff9e8;
+        }
+
+        .misc-card p {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .btn {
+            background: #7c7c7c;
+            border: 4px solid #f0d058;
+            color: #0f0f0f;
+            font-weight: 700;
+            font-size: 1.2rem;
+            padding: 0.6rem 2rem;
+            border-radius: 40px;
+            box-shadow: 0 6px 0 #3f3f3f, 0 8px 0 #1b1b1b;
+            cursor: pointer;
+            transition: 0.05s linear;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            background: linear-gradient(145deg, #a5a5a5, #707070);
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn:active {
+            transform: translateY(6px);
+            box-shadow: 0 2px 0 #3f3f3f, 0 4px 0 #1b1b1b;
+        }
+
+        .btn:hover {
+            background: #8f8f8f;
+            border-color: #ffffa0;
+        }
+
+
+        .hobbies-section {
+            text-align: center;
+        }
+
+        .hobbies-section h2 {
+            font-size: 2.2rem;
+            color: #fff9e8;
+            text-shadow: 4px 4px 0 #3a3a3a;
+            background: #5c7c5c;
+            display: inline-block;
+            padding: 0.3rem 2.5rem;
+            border: 4px solid #f0d058;
+            margin-bottom: 0.5rem;
+            box-shadow: 0 6px 0 #2b4f2b;
+        }
+
+        .hobbies-section p {
+            font-size: 1.3rem;
+            color: #f3e3c2;
+            text-shadow: 2px 2px 0 #1f2f1f;
+            margin-bottom: 2rem;
+            background: #312718;
+            display: inline-block;
+            padding: 0.3rem 2rem;
+            border: 3px solid #ab8e5e;
+            border-radius: 40px;
+        }
+
+        .hobbies-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .hobby-card {
+            background: #5c7c5c;
+            border: 5px solid #1e1e1e;
+            border-radius: 25px;
+            box-shadow: 0 0 0 3px #6b6b6b, 0 8px 0 #2f2f2f;
+            padding: 2rem 1.5rem;
+            color: #f5f0d7;
+            background-image: radial-gradient(circle at 70% 20%, #fcf0c0 2px, transparent 2px);
+            transition: 0.1s;
+        }
+
+        .hobby-card:hover {
+            border-color: #f0d058;
+            box-shadow: 0 0 0 3px #ffd966, 0 10px 0 #7f6000;
+            transform: scale(1.02);
+        }
+
+        .hobby-card h3 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            background: #1e3b1e;
+            display: inline-block;
+            padding: 0.2rem 1.5rem;
+            border: 3px solid #f0d058;
+            border-radius: 40px;
+            color: #fff9e8;
+        }
+
+        .hobby-card p {
+            font-size: 1.1rem;
+            margin-bottom: 1.8rem;
+            background: rgba(0,0,0,0.2);
+            padding: 0.5rem;
+            border-radius: 15px;
+        }
+
+      
+        @media (max-width: 650px) {
+            .brand h1 { font-size: 2.4rem; }
+            .hero-message h2 { font-size: 1.4rem; }
+            .big-card-wrapper { padding: 1rem; }
+        }
+    </style>
+</head>
+<body class="home">
+    <header class="top-banner">
+        <div class="hero-img-wrapper">
+            <img src="homehero.jpg" alt="Hero background" class="hero-img" />
+            <div class="hero-img-overlay"></div>
+            <div class="top-inner">
+                <div class="brand">
+                    <h1>⛏️ My Hobbies ⛏️</h1>
+                </div>
+                <div class="hero-message" style="margin-bottom:0.5em;">
+                    <h2>Welcome to my blocky world (and a game)</h2>
+                </div>
+                <nav class="site-nav" aria-label="Main navigation" style="margin-top:0.5em;">
+                    <ul class="nav-list">
+                        <li><a href="index.html" class="active">Home</a></li>
+                        <li><a href="hobby1.html">Gaming</a></li>
+                        <li><a href="hobby2.html">Lego</a></li>
+                        <li><a href="hobby3.html">Piano</a></li>
+                        <li><a href="contacts.html">Contacts</a></li>
+                        <li><a href="game.html">Game</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+    <main class="main-content">
+        <div class="big-card-bg">
+            <div class="big-card-wrapper">
+
+                <section class="about-section">
+                    <div class="about-card about-color1">
+                        <h2>Introduction</h2>
+                        <p>Hello! My name is Panachai Chothayaphorn. I'm from 3/3 and I'm currently studying, about to graduate from Triam Udom Suksa Pattanakarn (TUP).</p>
+                    </div>
+                    <div class="about-card about-color2">
+                        <h2>Stress Relief</h2>
+                        <p>I really enjoy doing stuff to help me release my stress from learning. Hobbies are a big part of my life and help me stay balanced.</p>
+                    </div>
+                    <div class="about-card about-color3">
+                        <h2>Joy & Creation</h2>
+                        <p>Whether it's building Lego sets, playing piano, or gaming, each activity gives me a sense of accomplishment and joy. I love exploring new interests and sharing them with friends.</p>
+                    </div>
+                    <div class="about-card about-color4">
+                        <h2>Balance</h2>
+                        <p>My journey at TUP has taught me the importance of balancing studies with fun. I believe that hobbies are essential for mental health and personal growth.</p>
+                    </div>
+                </section>
+                
+                <section class="misc-section">
+                    <h2>⚡ Miscellaneous ⚡</h2>
+                    <div class="misc-grid">
+                        <div class="misc-card">
+                            <h3>Memory Game</h3>
+                            <p>Test your memory with block pairs!</p>
+                            <a href="game.html" class="btn">Play Game</a>
+                        </div>
+                        <div class="misc-card">
+                            <h3>Contact Me</h3>
+                            <p>Ask questions or share your thoughts.</p>
+                            <a href="contacts.html" class="btn">Contact</a>
+                        </div>
+                    </div>
+                </section>
+                
+          
+                <section class="hobbies-section">
+                    <h2>🎮 My Hobbies 🎮</h2>
+                    <p>Click any card to explore more:</p>
+                    <div class="hobbies-grid">
+                        <div class="hobby-card">
+                            <h3>Gaming</h3>
+                            <p>Racing sims, building in Minecraft & Roblox, and more.</p>
+                            <a href="hobby1.html" class="btn">Explore</a>
+                        </div>
+                        <div class="hobby-card">
+                            <h3>Lego Building</h3>
+                            <p>Sets I love and projects I create brick by brick.</p>
+                            <a href="hobby2.html" class="btn">Explore</a>
+                        </div>
+                        <div class="hobby-card">
+                            <h3>Piano</h3>
+                            <p>Playing pieces, practicing, and composing music.</p>
+                            <a href="hobby3.html" class="btn">Explore</a>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

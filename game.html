@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Minecraft Memory · Card Game</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body.game {
+            background: #1a2e1f;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .top-banner {
+            width: 100%;
+        }
+
+        .hero-img-wrapper {
+            position: relative;
+            width: 100%;
+            height: 240px;
+            overflow: hidden;
+            background: #5f7a4b;
+            background-image: repeating-linear-gradient(45deg, #5e7d4a 0px, #5e7d4a 8px, #3f5c2f 8px, #3f5c2f 16px);
+        }
+
+        .hero-img-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(145deg, #3b2e1e 0%, #1f3b2c 100%);
+            opacity: 0.5;
+            mix-blend-mode: overlay;
+        }
+
+        .top-inner {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-shadow: 3px 3px 0 #2d2d2d;
+            padding: 1rem;
+        }
+
+        .brand h1 {
+            font-size: 2.5rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            background: #4c6b4c;
+            padding: 0.2rem 1.5rem;
+            display: inline-block;
+            border: 4px solid #f0d058;
+            box-shadow: inset 0 0 0 2px #1e3b1e, 0 6px 0 #2b4f2b;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            background: #4c6b4c;
+            padding: 0.3rem 2rem;
+            border: 2px solid #f0d058;
+            margin-top: 0.5rem;
+            font-weight: 600;
+        }
+
+        .site-nav {
+            margin-top: 1.2rem;
+        }
+
+        .nav-list {
+            display: flex;
+            list-style: none;
+            gap: 1.2rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            background: rgba(30, 30, 30, 0.8);
+            padding: 0.5rem 1.5rem;
+            border-radius: 40px;
+            border: 2px solid #5f5f5f;
+        }
+
+        .nav-list a {
+            color: #f0f0f0;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 0.2rem 0.8rem;
+            border-radius: 30px;
+            transition: 0.2s;
+            background: #4c4c4c;
+            border: 2px solid #b0b0b0;
+        }
+
+        .nav-list a.active {
+            background: #44a844;
+            border-color: #f0d058;
+            box-shadow: 0 0 0 2px #1e3b1e;
+        }
+
+        .nav-list a:hover {
+            background: #6f6f6f;
+            border-color: #ffffa0;
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 2rem 1rem;
+            max-width: 1100px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .game-area {
+            background: #9e9e9e;
+            background-image: repeating-linear-gradient(45deg, #8b8b8b 0px, #8b8b8b 2px, #a7a7a7 2px, #a7a7a7 6px);
+            border: 8px solid #3b3b3b;
+            box-shadow: inset 0 0 0 4px #1e1e1e, 0 10px 0 #2b2b2b;
+            border-radius: 24px;
+            padding: 2rem 1.5rem;
+        }
+
+        .game-area h2 {
+            font-size: 2.2rem;
+            color: #fff9e8;
+            text-shadow: 4px 4px 0 #3a3a3a, -2px -2px 0 #4f4f4f;
+            background: #5c7c5c;
+            display: inline-block;
+            padding: 0.3rem 2rem;
+            border: 4px solid #f0d058;
+            margin-bottom: 1.8rem;
+            letter-spacing: 2px;
+        }
+
+        .memory-board {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(100px, 150px));
+            gap: 1rem;
+            justify-content: center;
+            margin: 2rem auto;
+            background: #7f6b4b;
+            padding: 2rem 1.5rem;
+            border: 6px solid #4f3f28;
+            border-radius: 30px;
+            box-shadow: inset 0 0 0 4px #917b5b, 0 8px 0 #3a2e1c;
+        }
+
+        .memory-card {
+            aspect-ratio: 1 / 1;
+            background: #c6c6c6;
+            border: 4px solid #1e1e1e;
+            border-radius: 12px;
+            box-shadow: 0 0 0 2px #6b6b6b, 0 8px 0 #2f2f2f;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.1s linear;
+            cursor: pointer;
+            font-size: 3.2rem;
+            background-color: #e1d5b8;
+            background-image: radial-gradient(circle at 20% 30%, #fcf0c0 2px, transparent 2px), 
+                              repeating-linear-gradient(45deg, #bba47c 0px, #bba47c 2px, #dac292 2px, #dac292 4px);
+            background-blend-mode: overlay;
+        }
+
+        .memory-card.flipped {
+            background: #3b3b3b;
+            background-image: none;
+            border-color: #f0d058;
+            box-shadow: 0 0 0 3px #ffd966, 0 8px 0 #7f6000;
+            transform: scale(0.98);
+        }
+
+        .memory-card.matched {
+            border-color: #fedb5f;
+            filter: drop-shadow(0 0 6px gold);
+            opacity: 0.95;
+            box-shadow: 0 0 0 3px #ffbf00, 0 8px 0 #6b4f00;
+            background: #202020;
+            background-image: none;
+            cursor: default;
+        }
+
+        .block-icon {
+            font-size: 3.2rem;
+            line-height: 1;
+            filter: drop-shadow(2px 4px 0 #1a1a1a);
+            display: block;
+        }
+
+        .memory-card:not(.flipped):not(.matched) .block-icon {
+            display: none;
+        }
+
+        .memory-card:not(.flipped):not(.matched) {
+            background: #8b6f4c;
+            background-image: radial-gradient(circle, #5d4a2e 15%, #3d2e1b 70%);
+            border-color: #2d2d2d;
+        }
+
+    
+        .game-controls {
+            display: flex;
+            gap: 1.8rem;
+            justify-content: center;
+            margin: 1rem 0 1.5rem;
+        }
+
+        .btn {
+            background: #7c7c7c;
+            border: 4px solid #cfcfcf;
+            color: #0f0f0f;
+            font-weight: 700;
+            font-size: 1.4rem;
+            padding: 0.6rem 2rem;
+            border-radius: 40px;
+            box-shadow: 0 6px 0 #3f3f3f, 0 8px 0 #1b1b1b;
+            cursor: pointer;
+            transition: 0.05s linear;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            background: linear-gradient(145deg, #a5a5a5, #707070);
+        }
+
+        .btn:active {
+            transform: translateY(6px);
+            box-shadow: 0 2px 0 #3f3f3f, 0 4px 0 #1b1b1b;
+        }
+
+        .score-box {
+            background: #2e3b2e;
+            border: 6px solid #f0d058;
+            color: #f5f5dc;
+            font-size: 2rem;
+            font-weight: 600;
+            display: inline-block;
+            padding: 0.4rem 2.5rem;
+            margin: 1rem auto;
+            border-radius: 60px;
+            box-shadow: inset 0 -4px 0 #1a2e1a, 0 6px 0 #1a2e1a;
+            text-shadow: 2px 2px 0 #172217;
+        }
+
+        .feedback-box {
+            background: #312718;
+            border: 4px solid #f0d058;
+            color: #f3e3c2;
+            font-size: 1.5rem;
+            padding: 0.6rem 1.8rem;
+            border-radius: 20px;
+            margin-top: 1rem;
+            text-align: center;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            box-shadow: inset 0 0 0 3px #4d3a1f;
+            background-image: repeating-linear-gradient(0deg, #4f3f20 0px, #4f3f20 1px, #6b542c 1px, #6b542c 3px);
+        }
+
+        @media (max-width: 650px) {
+            .memory-board {
+                grid-template-columns: repeat(4, minmax(70px, 1fr));
+                gap: 0.6rem;
+            }
+            .block-icon { font-size: 2.4rem; }
+        }
+    </style>
+</head>
+<body class="game">
+    <header class="top-banner">
+        <div class="hero-img-wrapper">
+            <div class="hero-img-overlay"></div>
+            <div class="top-inner">
+                <div class="brand">
+                    <h1>⚡ Memory Card Game (Minecraft Editiion?!?!?!?!) ⚡</h1>
+                    <p class="subtitle">just remember !!</p>
+                </div>
+                <nav class="site-nav" aria-label="Main navigation">
+                    <ul class="nav-list">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="hobby1.html">Gaming</a></li>
+                        <li><a href="hobby2.html">Lego</a></li>
+                        <li><a href="hobby3.html">Piano</a></li>
+                        <li><a href="contacts.html">Contacts</a></li>
+                        <li><a href="#" class="active">Game</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+    <main class="main-content">
+        <section class="article game-area">
+            <h2>⛏️ block memory</h2>
+            <div id="game-board" class="memory-board"></div>
+            <div class="game-controls">
+                <button id="startBtn" class="btn">⛏️ start</button>
+                <button id="resetBtn" class="btn">🔄 reset</button>
+            </div>
+            <div id="scoreBox" class="score-box">score: <span id="score">0</span></div>
+            <div id="feedback" class="feedback-box" aria-live="polite"></div>
+        </section>
+    </main>
+
+    <script>
+        (function() {
+    
+            const BLOCKS = [
+                '🪨',   // stone
+                '🪵',   // oak log
+                '🧱',   // brick
+                '💎',   // diamond
+                '🔥',   // netherrack
+                '🌿',   // grass block
+                '🪔',   // lantern
+                '⛰️',   // cobblestone
+                '🍄',   // mushroom
+                '⚙️',   // gear / cog
+                '🧪',   // potion
+                '🪸',   // coral
+                '🪓',   // axe (tool)
+                '🪣'    // bucket
+            ];
+
+            const PAIRS = 8;             
+            const ACTIVE_BLOCKS = BLOCKS.slice(0, PAIRS);
+
+       
+            let cards = [];
+            let flippedIndexes = [];
+            let locked = false;
+            let score = 0;
+            let matches = 0;
+            let timeoutId = null;
+
+       
+            const boardEl = document.getElementById('game-board');
+            const scoreSpan = document.getElementById('score');
+            const feedbackEl = document.getElementById('feedback');
+            const startBtn = document.getElementById('startBtn');
+            const resetBtn = document.getElementById('resetBtn');
+
+            const shuffle = (arr) => {
+                for (let i = arr.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [arr[i], arr[j]] = [arr[j], arr[i]];
+                }
+                return arr;
+            };
+
+          
+            const buildDeck = () => {
+                let deck = [];
+                for (let i = 0; i < PAIRS; i++) {
+                    deck.push({ block: ACTIVE_BLOCKS[i], matched: false, id: i });
+                    deck.push({ block: ACTIVE_BLOCKS[i], matched: false, id: i });
+                }
+                return shuffle(deck).map((card, idx) => ({
+                    ...card,
+                    cardIndex: idx,
+                    element: null,
+                }));
+            };
+
+            const renderBoard = () => {
+                boardEl.innerHTML = '';
+                cards.forEach((card, idx) => {
+                    const cardDiv = document.createElement('div');
+                    cardDiv.className = 'memory-card';
+                    if (card.matched) cardDiv.classList.add('matched');
+                    cardDiv.dataset.index = idx;
+
+                    const iconSpan = document.createElement('span');
+                    iconSpan.className = 'block-icon';
+                    iconSpan.textContent = card.block;
+                    cardDiv.appendChild(iconSpan);
+
+                    cardDiv.addEventListener('click', () => handleCardClick(idx));
+                    cards[idx].element = cardDiv;
+                    boardEl.appendChild(cardDiv);
+                });
+            };
+
+            const syncClasses = () => {
+                cards.forEach((card, idx) => {
+                    const el = card.element;
+                    if (!el) return;
+                    if (card.matched) {
+                        el.classList.add('matched');
+                        el.classList.remove('flipped');
+                    } else {
+                        el.classList.remove('matched');
+                        if (flippedIndexes.includes(idx)) {
+                            el.classList.add('flipped');
+                        } else {
+                            el.classList.remove('flipped');
+                        }
+                    }
+                });
+            };
+
+           
+            const checkWin = () => {
+                if (matches === PAIRS) {
+                    feedbackEl.textContent = '🎉 CONGRATULATIONS! YOU WIN! 🎉';
+                }
+            };
+
+           
+            const updateScore = (points = 1) => {
+                score += points;
+                scoreSpan.textContent = score;
+            };
+
+         
+            const resetGame = () => {
+                if (timeoutId) {
+                    clearTimeout(timeoutId);
+                    timeoutId = null;
+                }
+                cards = buildDeck();
+                flippedIndexes = [];
+                locked = false;
+                score = 0;
+                matches = 0;
+                scoreSpan.textContent = '0';
+                feedbackEl.textContent = '';
+                renderBoard();
+            };
+
+    
+            const handleCardClick = (idx) => {
+                if (locked) return;
+                const card = cards[idx];
+                if (card.matched) return;
+                if (flippedIndexes.includes(idx)) return;
+                if (flippedIndexes.length === 2) return;
+
+                flippedIndexes.push(idx);
+                syncClasses();
+
+                if (flippedIndexes.length === 2) {
+                    const idxA = flippedIndexes[0];
+                    const idxB = flippedIndexes[1];
+                    const cardA = cards[idxA];
+                    const cardB = cards[idxB];
+
+                    if (cardA.id === cardB.id) {
+                    
+                        cardA.matched = true;
+                        cardB.matched = true;
+                        matches++;
+                        updateScore(10);   
+
+                        flippedIndexes = [];
+                        syncClasses();
+                        checkWin();
+                        feedbackEl.textContent = '✔️ pair matched!';
+                    } else {
+               
+                        locked = true;
+                        feedbackEl.textContent = '❌ not a match...';
+                        if (timeoutId) clearTimeout(timeoutId);
+                        timeoutId = setTimeout(() => {
+                            flippedIndexes = [];
+                            syncClasses();
+                            locked = false;
+                            timeoutId = null;
+                            feedbackEl.textContent = '';
+                        }, 700);
+                    }
+                } else {
+                    feedbackEl.textContent = '';
+                }
+            };
+
+            // start / restart
+            const startGame = () => {
+                resetGame();
+            };
+
+            
+            cards = buildDeck();
+            renderBoard();
+
+          
+            startBtn.addEventListener('click', startGame);
+            resetBtn.addEventListener('click', resetGame);
+        })();
+    </script>
+</body>
+</html>
